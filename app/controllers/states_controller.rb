@@ -1,4 +1,6 @@
+require 'rules_engine_service'
 class StatesController < ApiController
+
 	def index
 		states = State.all
 		render :json => states
@@ -11,6 +13,13 @@ class StatesController < ApiController
 
 	def create
 		state = State.create!(state_params)
+		RulesEngineService.initializeRulesEngine state.rule
+		render :json => state
+	end
+
+	def destroy
+		state = State.find(params[:id])
+		state.destroy!
 		render :json => state
 	end
 
