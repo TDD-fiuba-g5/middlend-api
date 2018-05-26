@@ -1,8 +1,13 @@
+require 'rules_engine_service'
+
 class StateService
 
-	def updateStates(event)
+	def self.updateStates(event)
 		State.all.map { |state|
-			RulesEngineService.updateState(state, event)
+			response = RulesEngineService.updateState(state.status, event)
+			state.status = response
+			state.save!
 		}
   end
+
 end

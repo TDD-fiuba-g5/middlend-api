@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20180513185538) do
     t.string "name"
     t.string "rule"
     t.string "status"
+    t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

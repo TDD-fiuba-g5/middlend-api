@@ -13,8 +13,20 @@ class StatesController < ApiController
 
 	def create
 		state = State.create!(state_params)
-		RulesEngineService.initializeRulesEngine state.rule
+		response = RulesEngineService.initializeRulesEngine state.rule
+		state.status = response
+		state.save!
 		render :json => state
+	end
+
+	def getCounter
+		state = State.find(params[:id])
+		date = params[:date]
+		if (!date) 
+			date = Date.today.strftime("%Y-%m-%d")
+		end
+		response = RulesEngineService.getCounter state.status, "\"" + state.name + "\"", "[\"" + date + "\"]"
+		render :json => response
 	end
 
 	def destroy
@@ -24,6 +36,6 @@ class StatesController < ApiController
 	end
 
 	def state_params
-    params.require(:state).permit(:name, :rule, :status)
+    params.require(:state).permit(:name, :rule, :status, :value)
   end
 end

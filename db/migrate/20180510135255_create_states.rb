@@ -4,6 +4,7 @@ class CreateStates < ActiveRecord::Migration[5.1]
     	t.string :name
     	t.string :rule
     	t.string :status
+    	t.string :value
       t.timestamps
     end
   end

@@ -1,6 +1,6 @@
-class EventsController < ApiController
+require 'state_service'
 
-	StateService stateService = StateService.new
+class EventsController < ApiController
 
 	def show
 		 event = Event.find(params[:id])
@@ -9,7 +9,7 @@ class EventsController < ApiController
 
 	def create
 		event = Event.create!(event_params)
-		stateService.updateStates(event)
+		StateService.updateStates(event)
 		render :json => event
 	end
 
